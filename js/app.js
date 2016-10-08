@@ -4,16 +4,18 @@ var gridSquares = document.getElementsByClassName('gridSquare');
 var movementKeys = ['a', 'w', 'd', 's'];
 var strafe = '';
 var target = 0;
+
 playerOne = {
   avatar: '<img src="images/linkright.jpg">',
   up: '<img src="images/linkup.jpg">',
   down: '<img src="images/linkdown.jpg">',
   left: '<img src="images/linkleft.jpg">',
   right: '<img src="images/linkright.jpg">',
-  position: 0,
+  position: undefined,
   status: '',
   action: 'idle',
-  direction: 'd'
+  direction: 'd',
+  score: 0
 }
 playerTwo = {
   avatar: '<img src="images/fighterleft.jpg">',
@@ -21,10 +23,11 @@ playerTwo = {
   down: '<img src="images/fighterdown.jpg">',
   left: '<img src="images/fighterleft.jpg">',
   right: '<img src="images/fighterright.jpg">',
-  position: 0,
+  position: undefined,
   status: '',
   action: 'idle',
-  direction: 'j'
+  direction: 'j',
+  score: 0,
 }
 
 for (var i = 0; i < gridSquares.length; i ++) {
@@ -32,8 +35,8 @@ for (var i = 0; i < gridSquares.length; i ++) {
   console.log("mapping grid coordinates", gridSquares[i].getAttribute('data-position'));
 }
 
-spawnPlayer();
-function  spawnPlayer() {
+
+function  spawnPlayerOne() {
   // choose random spawn point
   console.log("spawning player");
   var spawnPoint = gridSquares[Math.floor(Math.random() * 30)];
@@ -43,7 +46,8 @@ function  spawnPlayer() {
   spawnPoint.innerHTML = playerOne.avatar;
   playerOne.position = parseFloat(spawnPoint.getAttribute('data-position'));
   console.log("playerOne.position is", playerOne.position);
-
+}
+function spawnPlayerTwo () {
   // choose random spawn point
   console.log("spawning player");
   var spawnPoint = gridSquares[Math.floor(Math.random() * 30)];
@@ -65,6 +69,21 @@ function  spawnPlayer() {
 
 window.addEventListener("keyup", function(e) {
   whatPress = e.key;
+  console.log(whatPress);
+  if (whatPress === '1') {
+    if (playerOne.position === undefined) {
+    spawnPlayerOne();
+  } else {
+    console.log("no double spawnsies");
+  }
+  }
+  if (whatPress === '0') {
+    if (playerTwo.position === undefined) {
+    spawnPlayerTwo();
+  } else {
+    console.log("no double spawnsies");
+  }
+  }
   if (whatPress === 'c' || whatPress === 'f' || whatPress === 'n' || whatPress === 'h') {
     fightClub();
   } else {
@@ -130,6 +149,7 @@ function targeting() {
   }
   if (whatPress === 'w') {
     target = playerOne.position - 6;
+    console.log('target', target);
   }
   if (whatPress === 'l') {
     target = playerTwo.position + 1;
@@ -145,6 +165,7 @@ function targeting() {
   }
   if (whatPress === 'i') {
     target = playerTwo.position - 6;
+    console.log('target', target);
   }
 }
 
@@ -191,6 +212,9 @@ function fightClub () {
         playerTwo.health = 'dead';
         console.log("kill confirmed");
         gridSquares[playerTwo.position].innerHTML = '';
+        playerTwo.position = undefined;
+        playerOne.score = playerOne.score + 1;
+        console.log('playerOne score', playerOne.score);
       }
     }
   } if (whatPress === 'f') {
@@ -210,6 +234,9 @@ function fightClub () {
         playerOne.health = 'dead';
         console.log("kill confirmed");
         gridSquares[playerOne.position].innerHTML = '';
+        playerOne.position = undefined;
+        playerTwo.score = playerTwo.score + 1;
+        console.log('playerTwo score', playerTwo.score );
       }
     }
   } if (whatPress === 'h') {

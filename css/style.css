@@ -1,12 +1,39 @@
+body {
+  background-image: url('../images/arenabck.jpg');
+  background-size: cover;
+}
+h1 p {
+  text-align: center;
+  margin: auto;
+}
+#messageBox {
+  border: 3px solid black;
+  border-radius: 10px;
+  height: 30px;
+  width: 300px;
+  display: inline-block;
+  margin: 1% 8% 1% 8%;
+}
+#scoreBox {
+  border: 3px solid black;
+  border-radius: 10px;
+  height: 30px;
+  width: 300px;
+  display: inline-block;
+  margin: 1% 8% 1% 8%;
+}
 .boardFrame {
   border: 3px solid black;
-  height: 400px;
-  width: 400px;
+  border-radius: 10px;
+  height: 600px;
+  width: 600px;
+  margin: auto;
 }
 .gridSquare {
-  border: 3px solid gold;
-  height: 12.2%;
-  width: 12.2%;
+  border: 3px solid black;
+  border-radius: 10px;
+  height: 13.1%;
+  width: 13.1%;
   vertical-align: top;
   display: inline-block;
   margin: 1%;
