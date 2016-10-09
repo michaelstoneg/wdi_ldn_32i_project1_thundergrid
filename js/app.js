@@ -1,4 +1,7 @@
 
+
+
+
 console.log("It's Aliiive!!!!");
 
 var gridSquares = document.getElementsByClassName('gridSquare');
@@ -16,6 +19,7 @@ playerOne = {
   right: '<img src="images/linkright.jpg">',
   position: undefined,
   action: '',
+  health: '',
   direction: 'd',
   score: 0,
   scoreDisplay: scoreBoxOne
@@ -29,6 +33,7 @@ playerTwo = {
   right: '<img src="images/fighterright.jpg">',
   position: undefined,
   action: '',
+  health: '',
   direction: 'i',
   score: 0,
   scoreDisplay: scoreBoxTwo
@@ -92,6 +97,10 @@ window.addEventListener("keyup", function(e) {
 });
 
 function hotStepper () {
+  if (player.health === 'dead') {
+  console.log('where you think you going? you dead. respawn');
+  messageBox.innerHTML = 'where you think you going?  ', + player.name + ' you dead. respawn';
+}
   if (whatPress === 'w' || whatPress === 'a' || whatPress === 's' || whatPress === 'd') {
     player = playerOne;
     console.log("player is now", player);
@@ -105,6 +114,13 @@ function hotStepper () {
   if (whatPress === player.direction) {
   console.log("ok to move");
   targeting();
+  if (target < 0 || target > 35) {
+  gridSquares[player.position].innerHTML = '';
+  player.health = 'dead';
+  player.position = undefined;
+  console.log("You just ran off a cliff");
+  messageBox.innerHTML = player.name + 'You just ran off a cliff';
+}
   if (target !== playerOne.position && target !== playerTwo.position) {
     console.log("target accquired. Redy to move to", target);
     gridSquares[player.position].innerHTML = '';
