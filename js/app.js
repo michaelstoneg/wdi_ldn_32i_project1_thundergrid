@@ -9,6 +9,8 @@ var messageBox = document.getElementById('messageBox');
 var scoreBoxOne = document.getElementById('scoreBoxOne');
 var scoreBoxTwo = document.getElementById('scoreBoxTwo');
 var target = 0;
+var spearPosition = undefined;
+var spearImage = document.getElementById('spearImage');
 
 playerOne = {
   name: 'p1',
@@ -19,6 +21,7 @@ playerOne = {
   right: '<img src="images/linkright.jpg">',
   position: undefined,
   action: '',
+  weapon: 'sword',
   health: '',
   direction: 'd',
   score: 0,
@@ -33,6 +36,7 @@ playerTwo = {
   right: '<img src="images/fighterright.jpg">',
   position: undefined,
   action: '',
+  weapon: 'sword',
   health: '',
   direction: 'i',
   score: 0,
@@ -64,6 +68,7 @@ function  spawnPlayer() {
     player.position = parseFloat(spawnPoint.getAttribute('data-position'));
     console.log("player.position is", player.position);
     messageBox.innerHTML = player.name + "   spawned at   " + player.position;
+    player.weapon = 'sword';
   } else {
     console.log("No double spawnsies");
     messageBox.innerHTML = "No Double Spawnzies"
@@ -129,6 +134,12 @@ function hotStepper () {
     messageBox.innerHTML = player.name + "   moved to   " + target;
     player.position = target;
     console.log("direction", player.direction);
+    if (player.position === parseFloat(spearLocation.getAttribute('data-position'))) {
+      player.weapon = 'spear';
+      console.log("A wild spear appeared");
+      console.log(player.name + "   now has a   " + player.weapon);
+      // gridSquares[player.position].innerHTML = '';
+    }
 } else { console.log("nope");
 }
 }
@@ -138,21 +149,21 @@ function hotStepper () {
     }
   }
 
-function targeting() {
-  if (player.direction === 'd' || player.direction === 'l' ) {
-    target = player.position + 1;
-    console.log('target is', target);
-  } if (player.direction === 's' || player.direction === 'k' ) {
-    target = player.position + 6;
-    console.log('target is', target);
-  } if (player.direction === 'a' || player.direction === 'j') {
-    target = player.position - 1;
-    console.log('target is', target);
-  } if (player.direction === 'w' || player.direction === 'i') {
-    target = player.position - 6;
-    console.log('target', target);
+  function targeting() {
+    if (player.direction === 'd' || player.direction === 'l' ) {
+      target = player.position + 1;
+      console.log('target is', target);
+    } if (player.direction === 's' || player.direction === 'k' ) {
+      target = player.position + 6;
+      console.log('target is', target);
+    } if (player.direction === 'a' || player.direction === 'j') {
+      target = player.position - 1;
+      console.log('target is', target);
+    } if (player.direction === 'w' || player.direction === 'i') {
+      target = player.position - 6;
+      console.log('target', target);
+    }
   }
-}
 
 function imageRotator() {
     console.log("this is imageRotator");
@@ -199,6 +210,9 @@ function fightClub () {
         player.score = player.score + 1;
         console.log('player score', player.score);
         player.scoreDisplay.innerHTML = player.name + "'s score is" + player.score;
+        if (player.score === 5) {
+          supplyDrop();
+        }
       } else {
         console.log(altPlayer, "defended");
         messageBox.innerHTML = altPlayer.name + "   defended";
@@ -214,3 +228,51 @@ function fightClub () {
       gridSquares[player.position].style.background = '#3399ff';
   }
 }
+
+function supplyDrop() {
+  spearLocation = gridSquares[Math.floor(Math.random() * 30)];
+
+  if (spearLocation !== playerOne.location || spearLocation !== playerTwo.location) {
+  console.log("Spears go here   ", spearLocation);
+  spearLocation.innerHTML = '<img src="images/spear.jpg">';
+}
+
+}
+
+
+
+// function targeting() {
+//   if (player.direction === 'd' || player.direction === 'l' ) {
+//     if (player.action === 'attack' && player.weapon === 'spear') {
+//       target = player.position + 2;
+//       console.log('target is', target);
+//     } else {
+//     target = player.position + 1;
+//     console.log('target is', target);
+//   }
+//   } if (player.direction === 's' || player.direction === 'k' ) {
+//     if (player.action === 'attack' && player.weapon === 'spear') {
+//       target = player.position + 7;
+//       console.log('target is', target);
+//     } else {
+//     target = player.position + 6;
+//     console.log('target is', target);
+//   }
+//   } if (player.direction === 'a' || player.direction === 'j') {
+//     if (player.action === 'attack' && player.weapon === 'spear') {
+//       target = player.position - 2;
+//       console.log('target is', target);
+//     } else {
+//     target = player.position - 1;
+//     console.log('target is', target);
+//   }
+//   } if (player.direction === 'w' || player.direction === 'i') {
+//     if (player.action === 'attack' && player.weapon === 'spear') {
+//       target = player.position - 6;
+//       console.log('target is', target);
+//     } else {
+//     target = player.position - 7;
+//     console.log('target is', target);
+//   }
+//   }
+// }
