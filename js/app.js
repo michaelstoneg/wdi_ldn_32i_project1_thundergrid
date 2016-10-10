@@ -56,6 +56,8 @@ var attackSound = document.getElementById('attack');
 var defendedSound = document.getElementById('defended');
 var deathSound = document.getElementById('death');
 var bgm = document.getElementById('bgm');
+var powerUpSound = document.getElementById('powerUp');
+var supplyDropSound = document.getElementById('supplyDrop');
 
 
 for (var i = 0; i < gridSquares.length; i ++) {
@@ -151,6 +153,8 @@ function hotStepper () {
       player.weapon = 'spear';
       console.log("A wild spear appeared");
       console.log(player.name + "   now has a   " + player.weapon);
+      powerUpSound.playbackRate = 1.5;
+      powerUpSound.play();
       messageBox.innerHTML = player.name + "   has a   " + player.weapon;
       spearLocation = undefined;
       // gridSquares[player.position].innerHTML = '';
@@ -278,10 +282,11 @@ function fightClub () {
 
 function supplyDrop() {
   spearLocation = gridSquares[Math.floor(Math.random() * 30)];
-
   if (spearLocation !== playerOne.location || spearLocation !== playerTwo.location) {
   console.log("Spears go here   ", spearLocation);
   spearLocation.innerHTML = '<img src="images/spear.jpg">';
+  supplyDropSound.playbackRate = 1.5;
+  supplyDropSound.play();
 }
 
 }
