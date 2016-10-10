@@ -129,6 +129,7 @@ function hotStepper () {
 }
   if (target !== playerOne.position && target !== playerTwo.position) {
     console.log("target accquired. Redy to move to", target);
+    player.action = 'move';
     gridSquares[player.position].innerHTML = '';
     gridSquares[player.position].style.background = '';
     gridSquares[target].innerHTML = player.avatar;
@@ -140,6 +141,7 @@ function hotStepper () {
       console.log("A wild spear appeared");
       console.log(player.name + "   now has a   " + player.weapon);
       messageBox.innerHTML = player.name + "   has a   " + player.weapon;
+      spearLocation = undefined;
       // gridSquares[player.position].innerHTML = '';
     }
 } else { console.log("nope");
@@ -153,20 +155,45 @@ function hotStepper () {
 
   function targeting() {
     if (player.direction === 'd' || player.direction === 'l' ) {
+      if (player.action === 'attack' && player.weapon === 'spear') {
+        console.log(player.name, '   used  ', player.weapon, player.action );
+        // gridSquares[player.position + 1].innerHTML = '<img src="images/spear.jpg">';
+        console.log("spear img goes here", gridSquares[player.position + 1]);
+        target = player.position + 2;
+        console.log('target is', target);
+      } else {
       target = player.position + 1;
       console.log('target is', target);
+    }
     } if (player.direction === 's' || player.direction === 'k' ) {
+        if (player.action === 'attack' && player.weapon === 'spear') {
+          console.log(player.name, '   used  ', player.weapon, player.action );
+          target = player.position + 12;
+          console.log('target is', target);
+        } else {
       target = player.position + 6;
       console.log('target is', target);
-    } if (player.direction === 'a' || player.direction === 'j') {
+    }
+  } if (player.direction === 'a' || player.direction === 'j') {
+      if (player.action === 'attack' && player.weapon === 'spear') {
+        console.log(player.name, '   used  ', player.weapon, player.action );
+        target = player.position - 2;
+        console.log('target is', target);
+      } else {
       target = player.position - 1;
       console.log('target is', target);
-    } if (player.direction === 'w' || player.direction === 'i') {
+    }
+  } if (player.direction === 'w' || player.direction === 'i') {
+      if (player.action === 'attack' && player.weapon === 'spear') {
+        console.log(player.name, '   used  ', player.weapon, player.action );
+        target = player.position - 12;
+        console.log('target is', target);
+      } else {
       target = player.position - 6;
       console.log('target', target);
     }
   }
-
+}
 function imageRotator() {
     console.log("this is imageRotator");
     if (whatPress === 'i' || whatPress === 'w') {
@@ -205,6 +232,7 @@ function fightClub () {
         if (altPlayer.action !== 'defend') {
         altPlayer.health = 'dead';
         console.log("kill confirmed");
+        player.action = '';
         messageBox.innerHTML = altPlayer.name + "   is dead";
         gridSquares[altPlayer.position].innerHTML = '<img src="images/blood.png">';
         gridSquares[altPlayer.position].style.background = '';
@@ -240,41 +268,3 @@ function supplyDrop() {
 }
 
 }
-
-
-
-// function targeting() {
-//   if (player.direction === 'd' || player.direction === 'l' ) {
-//     if (player.action === 'attack' && player.weapon === 'spear') {
-//       target = player.position + 2;
-//       console.log('target is', target);
-//     } else {
-//     target = player.position + 1;
-//     console.log('target is', target);
-//   }
-//   } if (player.direction === 's' || player.direction === 'k' ) {
-//     if (player.action === 'attack' && player.weapon === 'spear') {
-//       target = player.position + 7;
-//       console.log('target is', target);
-//     } else {
-//     target = player.position + 6;
-//     console.log('target is', target);
-//   }
-//   } if (player.direction === 'a' || player.direction === 'j') {
-//     if (player.action === 'attack' && player.weapon === 'spear') {
-//       target = player.position - 2;
-//       console.log('target is', target);
-//     } else {
-//     target = player.position - 1;
-//     console.log('target is', target);
-//   }
-//   } if (player.direction === 'w' || player.direction === 'i') {
-//     if (player.action === 'attack' && player.weapon === 'spear') {
-//       target = player.position - 6;
-//       console.log('target is', target);
-//     } else {
-//     target = player.position - 7;
-//     console.log('target is', target);
-//   }
-//   }
-// }
