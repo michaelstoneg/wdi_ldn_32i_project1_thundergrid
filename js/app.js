@@ -69,6 +69,7 @@ function  spawnPlayer() {
     console.log("player.position is", player.position);
     messageBox.innerHTML = player.name + "   spawned at   " + player.position;
     player.weapon = 'sword';
+    player.health = 'alive';
   } else {
     console.log("No double spawnsies");
     messageBox.innerHTML = "No Double Spawnzies"
@@ -138,6 +139,7 @@ function hotStepper () {
       player.weapon = 'spear';
       console.log("A wild spear appeared");
       console.log(player.name + "   now has a   " + player.weapon);
+      messageBox.innerHTML = player.name + "   has a   " + player.weapon;
       // gridSquares[player.position].innerHTML = '';
     }
 } else { console.log("nope");
@@ -204,13 +206,13 @@ function fightClub () {
         altPlayer.health = 'dead';
         console.log("kill confirmed");
         messageBox.innerHTML = altPlayer.name + "   is dead";
-        gridSquares[altPlayer.position].innerHTML = '';
+        gridSquares[altPlayer.position].innerHTML = '<img src="images/blood.png">';
         gridSquares[altPlayer.position].style.background = '';
         altPlayer.position = undefined;
         player.score = player.score + 1;
         console.log('player score', player.score);
         player.scoreDisplay.innerHTML = player.name + "'s score is" + player.score;
-        if (player.score === 5) {
+        if (player.score === 1) {
           supplyDrop();
         }
       } else {
