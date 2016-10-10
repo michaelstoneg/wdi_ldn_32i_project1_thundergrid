@@ -51,11 +51,19 @@ if (player === playerOne) {
   altPlayer = playerOne;
 }
 
+var jumpSound = document.getElementById('jump');
+var attackSound = document.getElementById('attack');
+var defendedSound = document.getElementById('defended');
+var deathSound = document.getElementById('death');
+var bgm = document.getElementById('bgm');
+
+
 for (var i = 0; i < gridSquares.length; i ++) {
   gridSquares[i].setAttribute('data-position', i);
   console.log("mapping grid coordinates", gridSquares[i].getAttribute('data-position'));
 }
-
+// bgm.volume = .5;
+// bgm.play();
 function  spawnPlayer() {
   // choose random spawn point
   if (player.position === undefined) {
@@ -122,6 +130,7 @@ function hotStepper () {
   targeting();
   if (target < 0 || target > 35) {
   gridSquares[player.position].innerHTML = '';
+  deathSound.play();
   player.health = 'dead';
   player.position = undefined;
   console.log("You just ran off a cliff");
@@ -130,6 +139,8 @@ function hotStepper () {
   if (target !== playerOne.position && target !== playerTwo.position) {
     console.log("target accquired. Redy to move to", target);
     player.action = 'move';
+    jumpSound.playbackRate = 2;
+    jumpSound.play();
     gridSquares[player.position].innerHTML = '';
     gridSquares[player.position].style.background = '';
     gridSquares[target].innerHTML = player.avatar;
@@ -220,6 +231,8 @@ function fightClub () {
   }
   if (whatPress === 'c' || whatPress === 'n') {
     player.action = 'attack';
+    attackSound.playbackRate = 2.5;
+    attackSound.play();
     console.log(player, "drops his defense");
     console.log(player, "attacks");
     gridSquares[player.position].style.background = '#ff5050';
@@ -230,6 +243,8 @@ function fightClub () {
         console.log("attacking", altPlayer);
         messageBox.innerHTML = player.name + "   attacks   " + altPlayer.name;
         if (altPlayer.action !== 'defend') {
+        deathSound.playbackRate = .7;
+        deathSound.play();
         altPlayer.health = 'dead';
         console.log("kill confirmed");
         player.action = '';
@@ -246,6 +261,8 @@ function fightClub () {
       } else {
         console.log(altPlayer, "defended");
         messageBox.innerHTML = altPlayer.name + "   defended";
+        defendedSound.playbackRate = 1;
+        defendedSound.play();
       }
     }
       else {
