@@ -14,11 +14,15 @@ var spearImage = document.getElementById('spearImage');
 
 playerOne = {
   name: 'p1',
-  avatar: '<img src="images/linkright.jpg">',
-  up: '<img src="images/linkup.jpg">',
-  down: '<img src="images/linkdown.jpg">',
-  left: '<img src="images/linkleft.jpg">',
-  right: '<img src="images/linkright.jpg">',
+  avatar: '<img src="images/frogright.png">',
+  up: '<img src="images/frogup.png">',
+  down: '<img src="images/frogdown.png">',
+  left: '<img src="images/frogleft.png">',
+  right: '<img src="images/frogright.png">',
+  upattack: '',
+  downattack: '<img src="images/frogdownattack.gif">',
+  leftattack: '<img src="images/frogleftattack.gif">',
+  rightattack: '',
   position: undefined,
   action: '',
   weapon: 'sword',
@@ -29,11 +33,15 @@ playerOne = {
 }
 playerTwo = {
   name: 'p2',
-  avatar: '<img src="images/fighterleft.jpg">',
-  up: '<img src="images/fighterup.jpg">',
-  down: '<img src="images/fighterdown.jpg">',
-  left: '<img src="images/fighterleft.jpg">',
-  right: '<img src="images/fighterright.jpg">',
+  avatar: '<img src="images/paladinleft.png">',
+  up: '<img src="images/paladinup.png">',
+  down: '<img src="images/paladindown.png">',
+  left: '<img src="images/paladinleft.png">',
+  right: '<img src="images/paladinright.png">',
+  upattack: '<img src="images/paladinupattack.gif">',
+  downattack: '<img src="images/paladindownattack.gif">',
+  leftattack: '<img src="images/paladinleftattack.gif">',
+  rightattack: '<img src="images/paladinrightattack.gif">',
   position: undefined,
   action: '',
   weapon: 'sword',
@@ -58,6 +66,9 @@ var deathSound = document.getElementById('death');
 var bgm = document.getElementById('bgm');
 var powerUpSound = document.getElementById('powerUp');
 var supplyDropSound = document.getElementById('supplyDrop');
+var defendSound = document.getElementById('defends');
+var tauntSound = document.getElementById('taunt');
+var spawnSound = document.getElementById('spawn');
 
 
 for (var i = 0; i < gridSquares.length; i ++) {
@@ -73,7 +84,7 @@ function  spawnPlayer() {
     var spawnPoint = gridSquares[Math.floor(Math.random() * 30)];
     console.log("spawing at", spawnPoint.getAttribute('data-position'));
     console.log("Your direction is", player.direction);
-    // playerOne.avatar = image goes here ;
+    spawnSound.play();
     spawnPoint.innerHTML = player.avatar;
     player.position = parseFloat(spawnPoint.getAttribute('data-position'));
     console.log("player.position is", player.position);
@@ -132,6 +143,7 @@ function hotStepper () {
   targeting();
   if (target < 0 || target > 35) {
   gridSquares[player.position].innerHTML = '';
+  deathSound.playbackRate = 2;
   deathSound.play();
   player.health = 'dead';
   player.position = undefined;
@@ -172,8 +184,8 @@ function hotStepper () {
     if (player.direction === 'd' || player.direction === 'l' ) {
       if (player.action === 'attack' && player.weapon === 'spear') {
         console.log(player.name, '   used  ', player.weapon, player.action );
-        // gridSquares[player.position + 1].innerHTML = '<img src="images/spear.jpg">';
-        console.log("spear img goes here", gridSquares[player.position + 1]);
+        // gridSquares[player.position + 1].innerHTML = '<img src="images/spear.png">';
+        // console.log("spear img goes here", gridSquares[player.position + 1]);
         target = player.position + 2;
         console.log('target is', target);
       } else {
@@ -227,6 +239,37 @@ function imageRotator() {
     gridSquares[player.position].innerHTML = player.avatar;
 }
 
+function animator (){
+ if (player.action === 'attack') {
+   if (player.direction === 'w' || player.direction === 'i') {
+     gridSquares[player.position].innerHTML = player.upattack;
+   }
+   if (player.direction === 'a' || player.direction === 'j') {
+     gridSquares[player.position].innerHTML = player.leftattack;
+   }
+   if (player.direction === 's' || player.direction === 'k') {
+     gridSquares[player.position].innerHTML = player.downattack;
+   }
+   if (player.direction === 'd' || player.direction === 'l') {
+     gridSquares[player.position].innerHTML = player.rightattack;
+   }
+ }
+ if (player.action === 'defend') {
+   if (player.direction === 'w' || player.direction === 'i') {
+     gridSquares[player.position].innerHTML = player.updefend;
+   }
+   if (player.direction === 'a' || player.direction === 'j') {
+     gridSquares[player.position].innerHTML = player.leftdefend;
+   }
+   if (player.direction === 's' || player.direction === 'k') {
+     gridSquares[player.position].innerHTML = player.downdefend;
+   }
+   if (player.direction === 'd' || player.direction === 'l') {
+     gridSquares[player.position].innerHTML = player.rightdefend;
+   }
+ }
+}
+
 function fightClub () {
   if (player === playerOne) {
     altPlayer = playerTwo;
@@ -243,11 +286,12 @@ function fightClub () {
     targeting();
     console.log("target accquired at", target);
     console.log("target is ", target);
+    animator();
       if (target === altPlayer.position) {
         console.log("attacking", altPlayer);
         messageBox.innerHTML = player.name + "   attacks   " + altPlayer.name;
         if (altPlayer.action !== 'defend') {
-        deathSound.playbackRate = .7;
+        deathSound.playbackRate = 1.5;
         deathSound.play();
         altPlayer.health = 'dead';
         console.log("kill confirmed");
@@ -257,6 +301,8 @@ function fightClub () {
         gridSquares[altPlayer.position].style.background = '';
         altPlayer.position = undefined;
         player.score = player.score + 1;
+        // tauntSound.playbackRate = .7;
+        // tauntSound.play();
         console.log('player score', player.score);
         player.scoreDisplay.innerHTML = player.name + "'s score is" + player.score;
         if (player.score === 1) {
@@ -275,6 +321,8 @@ function fightClub () {
     } if (whatPress === 'f' || whatPress === 'h') {
       player.action = 'defend';
       console.log(player, player.action);
+      defendSound.playbackRate = 1;
+      defendSound.play();
       messageBox.innerHTML = player.name + "   defends";
       gridSquares[player.position].style.background = '#3399ff';
   }
@@ -284,8 +332,8 @@ function supplyDrop() {
   spearLocation = gridSquares[Math.floor(Math.random() * 30)];
   if (spearLocation !== playerOne.location || spearLocation !== playerTwo.location) {
   console.log("Spears go here   ", spearLocation);
-  spearLocation.innerHTML = '<img src="images/spear.jpg">';
-  supplyDropSound.playbackRate = 1.5;
+  spearLocation.innerHTML = '<img src="images/spear.png">';
+  supplyDropSound.playbackRate = 2;
   supplyDropSound.play();
 }
 
