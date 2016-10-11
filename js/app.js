@@ -1,11 +1,15 @@
 
-
+// Add weapon switching (add aux weapon)
 
 
 console.log("It's Aliiive!!!!");
 
+var smallGrid = document.getElementById('size9');
+var bigGrid = document.getElementById('size36');
 var boardSize = 36;
-var boardFrame = document.getElementsByClassName('boardFrame');
+var modifier = 2;
+var outerLimit = 35;
+var boardFrame = document.getElementById('boardFrame');
 var gridSquares = document.getElementsByClassName('gridSquare');
 var messageBox = document.getElementById('messageBox');
 var infoBoxOne = document.getElementById('playerOneInfo');
@@ -18,6 +22,10 @@ var bowLocation = undefined;
 var magicStaffLocation = undefined;
 var spearImage = document.getElementById('spearImage');
 
+// targetingAdjust = {
+//
+// }
+
 playerOne = {
   name: 'p1',
   avatar: '<img src="images/frogright.png">',
@@ -25,10 +33,6 @@ playerOne = {
   down: '<img src="images/frogdown.png">',
   left: '<img src="images/frogleft.png">',
   right: '<img src="images/frogright.png">',
-  upattack: '',
-  downattack: '<img src="images/frogdownattack.gif">',
-  leftattack: '<img src="images/frogleftattack.gif">',
-  rightattack: '',
   position: undefined,
   action: '',
   weapon: 'sword',
@@ -36,19 +40,15 @@ playerOne = {
   direction: 'd',
   score: 0,
   infoBox: infoBoxOne,
-  bag: playerOneItems
+  bag: playerOneItems,
 };
 playerTwo = {
   name: 'p2',
-  avatar: '<img src="images/paladinleft.png">',
-  up: '<img src="images/paladinup.png">',
-  down: '<img src="images/paladindown.png">',
-  left: '<img src="images/paladinleft.png">',
-  right: '<img src="images/paladinright.png">',
-  upattack: '<img src="images/paladinupattack.gif">',
-  downattack: '<img src="images/paladindownattack.gif">',
-  leftattack: '<img src="images/paladinleftattack.gif">',
-  rightattack: '<img src="images/paladinrightattack.gif">',
+  avatar: '<img src="images/paladinleftattack3.png">',
+  up: '<img src="images/paladinupattack3.png">',
+  down: '<img src="images/paladindownattack2.png">',
+  left: '<img src="images/paladinleftattack3.png">',
+  right: '<img src="images/paladinrightattack2.png">',
   position: undefined,
   action: '',
   weapon: 'sword',
@@ -56,11 +56,12 @@ playerTwo = {
   direction: 'i',
   score: 0,
   infoBox: infoBoxTwo,
-  bag: playerTwoItems
+  bag: playerTwoItems,
 };
 
 var player = undefined;
 var altPlayer = undefined;
+
 if (player === playerOne) {
   altPlayer = playerTwo;
 } if (player === playerTwo) {
@@ -79,33 +80,59 @@ var tauntSound = document.getElementById('taunt');
 var spawnSound = document.getElementById('spawn');
 
 
-// for (var a = 0; a < boardSize; a ++) {
-//    console.log(boardSize);
-//    var gridSquares = document.createElement('div');
-//    gridSquares.setAttribute('className', 'gridSquares');
-//    console.log(gridSquares);
-//    console.log(boardFrame);
-//    boardFrame.appendChild(gridSquares);
-// }
+bigGrid.addEventListener('click', function(){
+  boardSize = 36;
+  modifier = 2;
+  outerLimit = 35;
+  document.getElementById('popup').style.display = 'none';
+  buildBoard();
+});
+smallGrid.addEventListener('click', function() {
+  boardSize = 9;
+  modifier = 1;
+  outerLimit = 8;
+  document.getElementById('popup').style.display = 'none';
+  buildBoard();
+});
 
 
-for (var i = 0; i < gridSquares.length; i ++) {
-  gridSquares[i].setAttribute('data-position', i);
+function buildBoard () {
+for (var a = 0; a < boardSize; a ++) {
+   console.log(boardSize);
+   var gridSquare = document.createElement('div');
+   gridSquare.setAttribute('class', 'gridSquare');
+   gridSquare.setAttribute('data-position', a);
+   boardFrame.appendChild(gridSquare);
+   if (boardSize === 9) {
+     boardFrame.style.width = '300px';
+     boardFrame.style.height = '300px';
+     gridSquare.style.width = '28%';
+     gridSquare.style.height = '28%';
+   }
+   if (boardSize === 36) {
+     boardFrame.style.width = '600px';
+     boardFrame.style.height = '600px';
+     gridSquare.style.width = '12.5%';
+     gridSquare.style.height = '12.5%';
+   }
+}
 }
 
-bgm.volume = 0.5;
-bgm.play();
+// bgm.volume = 0.5;
+// bgm.play();
+
 function  spawnPlayer() {
   // choose random spawn point
   if (player.position === undefined) {
-    var spawnPoint = gridSquares[Math.floor(Math.random() * 30)];
+    var spawnPoint = gridSquares[Math.floor(Math.random() * boardSize)];
     spawnSound.play();
     spawnPoint.innerHTML = player.avatar;
     player.position = parseFloat(spawnPoint.getAttribute('data-position'));
     player.weapon = 'sword';
     player.health = 'alive';
     player.action = 'move';
-  } 
+    player.bag.innerHTML = '';
+  }
 }
 
 window.addEventListener("keyup", function(e) {
@@ -148,7 +175,7 @@ function hotStepper () {
   player.action = 'move';
   targeting();
 
-  if (target < 0 || target > 35) {
+  if (target < 0 || target > outerLimit) {
     gridSquares[player.position].innerHTML = '';
     deathSound.playbackRate = 2;
     deathSound.play();
@@ -191,13 +218,13 @@ function hotStepper () {
     }
   if (player.direction === 's' || player.direction === 'k' ) {
       if (player.action === 'attack' && player.weapon === 'spear') {
-        target = player.position + 12;
+        target = player.position + (6 * modifier);
       }
       if (player.action === 'attack' && player.weapon === 'bow') {
         target = player.position + 24;
       }
       if (player.action === 'move' || player.weapon === 'sword') {
-          target = player.position + 6;
+          target = player.position + (3 * modifier);
       }
   }
   if (player.direction === 'a' || player.direction === 'j') {
@@ -213,13 +240,13 @@ function hotStepper () {
     }
   if (player.direction === 'w' || player.direction === 'i') {
       if (player.action === 'attack' && player.weapon === 'spear') {
-        target = player.position - 12;
+        target = player.position - (6 * modifier);
       }
       if (player.action === 'attack' && player.weapon === 'bow') {
         target = player.position - 24;
       }
       if (player.action === 'move' || player.weapon === 'sword') {
-        target = player.position - 6;
+        target = player.position - (3 * modifier);
       }
     }
   }
@@ -289,23 +316,23 @@ function fightClub () {
 function supplyDrop(ps) {
 
   if (ps === 1) {
-    spearLocation = gridSquares[Math.floor(Math.random() * 30)];
+    spearLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (spearLocation.innerHTML === '') {
       spearLocation.innerHTML = '<img src="images/spear.png">';
       supplyDropSound.playbackRate = 2;
       supplyDropSound.play();
     }
   }
-  else if (ps === 2) {
-    bowLocation = gridSquares[Math.floor(Math.random() * 30)];
+  else if (boardSize === 36 && ps === 2) {
+    bowLocation = gridSquares[Math.floor(Math.random() * boardSize)];
       if (bowLocation.innerHTML === '') {
         bowLocation.innerHTML = '<img src="images/bow.png">';
         supplyDropSound.playbackRate = 2;
         supplyDropSound.play();
       }
     }
-  else if (ps === 3) {
-    magicStaffLocation = gridSquares[Math.floor(Math.random() * 30)];
+  else if (boardSize === 36 && ps === 3) {
+    magicStaffLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (magicStaffLocation.innerHTML === '') {
       magicStaffLocation.innerHTML = '<img src="images/magicStaff.png">';
       supplyDropSound.playbackRate = 2;

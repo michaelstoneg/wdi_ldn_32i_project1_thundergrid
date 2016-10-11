@@ -10,11 +10,8 @@
   </head>
   <body>
     <div class="vidBox">
-        <video src="images/lavaboard.mp4" autoplay loop="true"></video>
+        <!-- <video src="images/lavaboard.mp4" autoplay loop="true"></video> -->
     </div>
-
-    <h1>Thun-der grid! Thun-der grid!</h1>
-      <p>Two squares enter. One square leaves</p>
 
       <div id="spacer"></div>
 
@@ -25,43 +22,8 @@
           <div id="playerOneInfo"></div>
       </div>
 
-      <div class="boardFrame">
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
-        <div class="gridSquare" class="cliff"></div>
+      <div id="boardFrame">
+
       </div>
 
 
@@ -71,9 +33,28 @@
           <div id="playerTwoInfo"><div>
       </div>
 
-      <!-- <div class="popup">
-        <div class="popupBox">In here</div>
-      </div> -->
+      <div id="popup">
+        <h1>Grid of Fire</h1>
+        <h3>Fight to the death</h3>
+        <p>This game is best played with a gamepad controller. Keyboard instructions can be found in the readme.</p>
+        <ul>
+          <li>Movement, Attacking and Defending to outmatch your opponent</li>
+          <li>Attacking highlights your postion in red. Defending highlights it in blue.</li>
+          <li>Attacking drops your defense.</li>
+          <ul>Special items are rewards from the god of war for spilling blood.
+            <li>The spear can only attack 2 spaces in front (your position + 2).</li>
+            <li>The bow has a range of 4 spaces ahead.</li>
+            <li>Spear and Bow are useless at short range.</li>
+            <li>The Magic Staff automatically taegets your opponent, but it can be defended against.</li>
+          </ul>
+          <li>Timing is everyting</li>
+          <li>Never give up. Fight to the last</li>
+        </ul>
+        <div class="instructions"></div>
+        <br>
+        <div class="popupBox" id="size36">6 x 6 Board</div>
+        <div class="popupBox" id="size9"> 3 x 3 Board</div>
+      </div>
 
       <audio id="attack" src="sounds/attack.wav"></audio>
       <audio id="defended" src="sounds/defended.mp3"></audio>
