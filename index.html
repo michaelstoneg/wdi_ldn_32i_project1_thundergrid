@@ -6,27 +6,22 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 
     </script>
-    <title>Thunder_Grid</title>
+    <title>Grid of Fire</title>
   </head>
   <body>
     <div class="vidBox">
-        <!-- <video src="images/lavaboard.mp4" autoplay loop="true"></video> -->
+        <video src="images/lavaboard.mp4" autoplay loop="true"></video>
     </div>
 
+      <input type="button" id="reset" value="Reset" onClick="window.location.reload()">
       <div id="spacer"></div>
-
-      <div id="messageBox"></div>
       <div class="playerInfo" id="playerOne">
         <h1>Player One</h1>
           <div class="items" id="playerOneItems"></div>
           <div id="playerOneInfo"></div>
       </div>
-
       <div id="boardFrame">
-
       </div>
-
-
       <div class="playerInfo" id="playerTwo">
         <h1>Player Two</h1>
           <div class='items' id="playerTwoItems"></div>
@@ -47,8 +42,9 @@
             <li>Spear and Bow are useless at short range.</li>
             <li>The Magic Staff automatically taegets your opponent, but it can be defended against.</li>
           </ul>
-          <li>Timing is everyting</li>
-          <li>Never give up. Fight to the last</li>
+          <li>Timing is everyting. Never give up. Fight to the last</li>
+          <li>Keyboard Controls: P1: directions = w,a,s,d attack = c defend = f change weapon = e</li>
+          <li>P2 Controls: direction = i,j,k,l attack = n defend = h switch weapon = u</li>
         </ul>
         <div class="instructions"></div>
         <br>
@@ -62,7 +58,6 @@
       <audio id="jump" src="sounds/jump.mp3"></audio>
       <audio id="spawn" src="sounds/spawn.wav"></audio>
       <audio id="death" src="sounds/death2.mp3"></audio>
-      <audio id="taunt" src="sounds/taunt.wav"></audio>
       <audio id="powerUp" src="sounds/powerUp.wav"></audio>
       <audio id="supplyDrop" src="sounds/supplyDrop.mp3"></audio>
       <audio id="bgm" src="sounds/battleBgm.mp3" loop="true"></audio>

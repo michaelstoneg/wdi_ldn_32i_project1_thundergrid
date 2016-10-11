@@ -14,16 +14,17 @@ p ul li {
 #spacer {
   height: 50px;
 }
-#messageBox {
+#reset {
   border: 3px solid black;
   border-radius: 10px;
   height: 50px;
   width: 200px;
-  margin: 1% auto 5% auto;
+  margin: 5% auto 2% auto;;
   background-image: url('../images/stonewall.png');
   background-size: cover;
   text-align: center;
   color: yellow;
+  display: inline-block;
 
 }
 .playerInfo {
@@ -54,7 +55,6 @@ p ul li {
 #boardFrame {
   height: 600px;
   width: 600px;
-  margin: auto;
   display: inline-block;
 }
 .vidBox {

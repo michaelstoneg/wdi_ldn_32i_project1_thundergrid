@@ -11,7 +11,6 @@ var modifier = 2;
 var outerLimit = 35;
 var boardFrame = document.getElementById('boardFrame');
 var gridSquares = document.getElementsByClassName('gridSquare');
-var messageBox = document.getElementById('messageBox');
 var infoBoxOne = document.getElementById('playerOneInfo');
 var infoBoxTwo = document.getElementById('playerTwoInfo');
 var playerOneItems = document.getElementById('playerOneItems');
@@ -36,6 +35,7 @@ playerOne = {
   position: undefined,
   action: '',
   weapon: 'sword',
+  auxweapon: '',
   health: '',
   direction: 'd',
   score: 0,
@@ -52,6 +52,7 @@ playerTwo = {
   position: undefined,
   action: '',
   weapon: 'sword',
+  auxweapon: '',
   health: '',
   direction: 'i',
   score: 0,
@@ -76,10 +77,12 @@ var bgm = document.getElementById('bgm');
 var powerUpSound = document.getElementById('powerUp');
 var supplyDropSound = document.getElementById('supplyDrop');
 var defendSound = document.getElementById('defends');
-var tauntSound = document.getElementById('taunt');
 var spawnSound = document.getElementById('spawn');
 
 
+setup();
+
+function setup() {
 bigGrid.addEventListener('click', function(){
   boardSize = 36;
   modifier = 2;
@@ -94,7 +97,7 @@ smallGrid.addEventListener('click', function() {
   document.getElementById('popup').style.display = 'none';
   buildBoard();
 });
-
+}
 
 function buildBoard () {
 for (var a = 0; a < boardSize; a ++) {
@@ -118,8 +121,8 @@ for (var a = 0; a < boardSize; a ++) {
 }
 }
 
-// bgm.volume = 0.5;
-// bgm.play();
+bgm.volume = 0.5;
+bgm.play();
 
 function  spawnPlayer() {
   // choose random spawn point
@@ -131,7 +134,7 @@ function  spawnPlayer() {
     player.weapon = 'sword';
     player.health = 'alive';
     player.action = 'move';
-    player.bag.innerHTML = '';
+    player.bag.innerHTML = '<img src="images/sword.png">';
   }
 }
 
@@ -151,8 +154,11 @@ window.addEventListener("keyup", function(e) {
     fightClub();
   }
   if (whatPress === 'n' || whatPress === 'h') {
-  player = playerTwo;
-  fightClub();
+    player = playerTwo;
+    fightClub();
+  }
+  if (whatPress === 'q' || whatPress === 'o' || whatPress === 'e' || whatPress === 'u') {
+    grabBag();
   }
   else {
   hotStepper();
@@ -194,7 +200,6 @@ function hotStepper () {
     player.position = target;
     treasureHunt(player.position);
   }
-
 }
   else {
     imageRotator ();
@@ -250,7 +255,6 @@ function hotStepper () {
       }
     }
   }
-
 
 function imageRotator() {
     if (whatPress === 'i' || whatPress === 'w') {
@@ -344,30 +348,66 @@ function supplyDrop(ps) {
 
 
 function treasureHunt() {
-  console.log(bowLocation);
-  console.log(gridSquares[player.position]);
   if (gridSquares[player.position] === spearLocation) {
+    player.auxweapon = player.weapon;
     player.weapon = 'spear';
-    player.bag.innerHTML = '<img src="images/spear.png">';
+    player.bag.innerHTML += '<img src="images/spear.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     spearLocation = undefined;
   }
 
   if (gridSquares[player.position] === magicStaffLocation) {
-    console.log('!!!!!!!!!!');
+    player.auxweapon = player.weapon;
     player.weapon = 'magicStaff';
-    player.bag.innerHTML = '<img src="images/magicStaff.png">';
+    player.bag.innerHTML += '<img src="images/magicStaff.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     magicStaffLocation = undefined;
   }
 
   if (gridSquares[player.position] === bowLocation) {
+    player.auxweapon = player.weapon;
     player.weapon = 'bow';
-    player.bag.innerHTML = '<img src="images/bow.png">';
+    player.bag.innerHTML += '<img src="images/bow.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     bowLocation = undefined;
+  }
+}
+
+function grabBag () {
+  if (player === playerOne) {
+    altPlayer = playerTwo;
+  } if (player === playerTwo) {
+    altPlayer = playerOne;
+  }
+  //weapon switch
+  if (whatPress === 'e') {
+    player = playerOne;
+    console.log('change places');
+    var holder = player.auxweapon;
+    player.auxweapon = player.weapon;
+    player.weapon = holder;
+  }
+  if (whatPress === 'u') {
+    console.log('change places');
+    player = playerTwo;
+    var holder = player.auxweapon;
+    player.auxweapon = player.weapon;
+    player.weapon = holder;
+  }
+  //empty bag
+  if (whatPress === 'o') {
+    player = playerTwo;
+    player.auxweapon = '';
+    player.auxweapon = player.weapon;
+    player.weapon = '';
+  }
+  if (whatPress === 'q') {
+    player = playerOne;
+    player.auxweapon = '';
+    player.auxweapon = player.weapon;
+    player.weapon = '';
   }
 }
