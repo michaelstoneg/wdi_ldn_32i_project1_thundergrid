@@ -33,7 +33,7 @@ playerOne = {
   score: 0,
   infoBox: infoBoxOne,
   bag: playerOneItems
-}
+};
 playerTwo = {
   name: 'p2',
   avatar: '<img src="images/paladinleft.png">',
@@ -53,7 +53,7 @@ playerTwo = {
   score: 0,
   infoBox: infoBoxTwo,
   bag: playerTwoItems
-}
+};
 
 var player = undefined;
 var altPlayer = undefined;
@@ -95,9 +95,10 @@ function  spawnPlayer() {
     player.infoBox.innerHTML = player.name + "   spawned at   " + player.position;
     player.weapon = 'sword';
     player.health = 'alive';
+    player.action = 'move';
   } else {
     console.log("No double spawnsies");
-    player.infoBox.innerHTML = "No Double Spawnzies"
+    player.infoBox.innerHTML = "No Double Spawnzies";
   }
 }
 
@@ -165,7 +166,7 @@ function hotStepper () {
     gridSquares[player.position].innerHTML = '';
     gridSquares[player.position].style.background = '';
     gridSquares[target].innerHTML = player.avatar;
-    player.infoBox.innerHTML = player.name + "   moved to   " + target;
+    messageBox.innerHTML = player.name + "   moved to   " + target;
     player.position = target;
     console.log("direction", player.direction);
   }
@@ -173,7 +174,7 @@ function hotStepper () {
       player.weapon = 'spear';
       console.log("A wild spear appeared");
       console.log(player.name + "   now has a   " + player.weapon);
-      player.bag.innerHTML = '<img src="images/spear.png">'
+      player.bag.innerHTML = '<img src="images/spear.png">';
       powerUpSound.playbackRate = 1.5;
       powerUpSound.play();
       player.infoBox.innerHTML = player.name + "   has a   " + player.weapon;
@@ -185,7 +186,7 @@ function hotStepper () {
       player.weapon = 'bow';
       console.log("A wild bow appeared");
       console.log(player.name + "   now has a   " + player.weapon);
-      player.bag.innerHTML = '<img src="images/bow.png">'
+      player.bag.innerHTML = '<img src="images/bow.png">';
       powerUpSound.playbackRate = 1.5;
       powerUpSound.play();
       player.infoBox.innerHTML = player.name + "   has a   " + player.weapon;
@@ -218,11 +219,13 @@ function hotStepper () {
         target = player.position + 4;
         console.log('target is', target);
       }
-      else {
-      target = player.position + 1;
-      console.log('target is', target);
+      if (player.action === 'move' || player.weapon === 'sword') {
+        console.log("good for you buddy");
+        target = player.position + 1;
+        console.log('target is', target);
+      }
     }
-    } if (player.direction === 's' || player.direction === 'k' ) {
+    if (player.direction === 's' || player.direction === 'k' ) {
         if (player.action === 'attack' && player.weapon === 'spear') {
           console.log(player.name, '   used  ', player.weapon, player.action );
           target = player.position + 12;
@@ -235,11 +238,13 @@ function hotStepper () {
           target = player.position + 24;
           console.log('target is', target);
         }
-        else {
-      target = player.position + 6;
-      console.log('target is', target);
-    }
-  } if (player.direction === 'a' || player.direction === 'j') {
+        if (player.action === 'move' || player.weapon === 'sword') {
+          console.log("good for you buddy");
+          target = player.position + 6;
+          console.log('target is', target);
+        }
+  }
+  if (player.direction === 'a' || player.direction === 'j') {
       if (player.action === 'attack' && player.weapon === 'spear') {
         console.log(player.name, '   used  ', player.weapon, player.action );
         target = player.position - 2;
@@ -252,11 +257,13 @@ function hotStepper () {
         target = player.position - 4;
         console.log('target is', target);
       }
-      else {
-      target = player.position - 1;
-      console.log('target is', target);
-    }
-  } if (player.direction === 'w' || player.direction === 'i') {
+      if (player.action === 'move' || player.weapon === 'sword') {
+        console.log("good for you buddy");
+        target = player.position - 1;
+        console.log('target is', target);
+      }
+  }
+  if (player.direction === 'w' || player.direction === 'i') {
       if (player.action === 'attack' && player.weapon === 'spear') {
         console.log(player.name, '   used  ', player.weapon, player.action );
         target = player.position - 12;
@@ -269,10 +276,11 @@ function hotStepper () {
         target = player.position - 24;
         console.log('target is', target);
       }
-      else {
-      target = player.position - 6;
-      console.log('target', target);
-    }
+      if (player.action === 'move' || player.weapon === 'sword') {
+        console.log("good for you buddy");
+        target = player.position - 6;
+        console.log('target is', target);
+      }
   }
 }
 
@@ -293,38 +301,6 @@ function imageRotator() {
     }
     gridSquares[player.position].innerHTML = player.avatar;
 }
-
-// function animator (){
-//   console.log('welcome to the animator');
-//  if (player.action === 'attack') {
-//    if (player.direction === 'w' || player.direction === 'i') {
-//      gridSquares[player.position].innerHTML = player.upattack;
-//    }
-//    if (player.direction === 'a' || player.direction === 'j') {
-//      gridSquares[player.position].innerHTML = player.leftattack;
-//    }
-//    if (player.direction === 's' || player.direction === 'k') {
-//      gridSquares[player.position].innerHTML = player.downattack;
-//    }
-//    if (player.direction === 'd' || player.direction === 'l') {
-//      gridSquares[player.position].innerHTML = player.rightattack;
-//    }
-//  }
- // if (player.action === 'defend') {
- //   if (player.direction === 'w' || player.direction === 'i') {
- //     gridSquares[player.position].innerHTML = player.updefend;
- //   }
- //   if (player.direction === 'a' || player.direction === 'j') {
- //     gridSquares[player.position].innerHTML = player.leftdefend;
- //   }
- //   if (player.direction === 's' || player.direction === 'k') {
- //     gridSquares[player.position].innerHTML = player.downdefend;
- //   }
- //   if (player.direction === 'd' || player.direction === 'l') {
- //     gridSquares[player.position].innerHTML = player.rightdefend;
- //   }
- // }
- // }
 
 function fightClub () {
   if (player === playerOne) {
@@ -352,7 +328,6 @@ function fightClub () {
         altPlayer.health = 'dead';
         console.log("kill confirmed");
         player.action = '';
-        player.weapon = '';
         player.infoBox.innerHTML = '';
         altPlayer.infoBox.innerHTML = altPlayer.name + "   is dead";
         player.infoBox.innerHTML = altPlayer.name + "   is dead";
