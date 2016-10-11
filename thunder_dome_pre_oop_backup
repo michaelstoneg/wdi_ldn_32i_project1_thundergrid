@@ -4,8 +4,8 @@ console.log("It's Aliiive!!!!");
 
 var gridSquares = document.getElementsByClassName('gridSquare');
 var messageBox = document.getElementById('messageBox');
-var scoreBoxOne = document.getElementById('scoreBoxOne');
-var scoreBoxTwo = document.getElementById('scoreBoxTwo');
+var infoBoxOne = document.getElementById('infoBoxOne');
+var infoBoxTwo = document.getElementById('infoBoxTwo');
 var target = 0;
 
 playerOne = {
@@ -19,7 +19,7 @@ playerOne = {
   action: '',
   direction: 'd',
   score: 0,
-  scoreDisplay: scoreBoxOne
+  infoBox: infoBoxOne
 }
 playerTwo = {
   name: 'p2',
@@ -32,7 +32,7 @@ playerTwo = {
   action: '',
   direction: 'i',
   score: 0,
-  scoreDisplay: scoreBoxTwo
+  infoBox: infoBoxTwo
 }
 
 var player = undefined;
@@ -183,7 +183,7 @@ function fightClub () {
         altPlayer.position = undefined;
         player.score = player.score + 1;
         console.log('player score', player.score);
-        player.scoreDisplay.innerHTML = player.name + "'s score is" + player.score;
+        player.infoBox.innerHTML = player.name + "'s score is" + player.score;
       } else {
         console.log(altPlayer, "defended");
         messageBox.innerHTML = altPlayer.name + "   defended";

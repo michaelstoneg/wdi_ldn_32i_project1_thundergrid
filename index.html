@@ -9,15 +9,20 @@
     <title>Thunder_Grid</title>
   </head>
   <body>
+    <div class="vidBox">
+        <video src="images/lavaboard.mp4" autoplay loop="true"></video>
+    </div>
+
     <h1>Thun-der grid! Thun-der grid!</h1>
       <p>Two squares enter. One square leaves</p>
 
       <div id="spacer"></div>
 
       <div id="messageBox"></div>
-      <div id="scoreBoxOne"></div>
-      <div id="scoreBoxTwo"></div>
-
+      <div class="playerInfo" id="playerOne">
+        <h1>Player One</h1>
+          <div class="items" id="PlayerOneItems"></div>
+      </div>
 
       <div class="boardFrame">
         <div class="gridSquare" class="cliff"></div>
@@ -57,6 +62,16 @@
         <div class="gridSquare" class="cliff"></div>
         <div class="gridSquare" class="cliff"></div>
       </div>
+
+
+      <div class="playerInfo" id="playerTwo">
+        <h1>Player Two</h1>
+          <div class='items' id="PlayerTwoItems"></div>
+      </div>
+
+      <!-- <div class="popup">
+        <div class="popupBox">In here</div>
+      </div> -->
 
       <audio id="attack" src="sounds/attack.wav"></audio>
       <audio id="defended" src="sounds/defended.mp3"></audio>
