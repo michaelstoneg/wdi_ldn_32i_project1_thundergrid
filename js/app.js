@@ -376,25 +376,25 @@ function treasureHunt() {
   }
 }
 
-// function grabBag () {
-//   if (player === playerOne) {
-//     altPlayer = playerTwo;
-//   } if (player === playerTwo) {
-//     altPlayer = playerOne;
-//   }
-//   //weapon switch
-//   if (whatPress === 'e') {
-//     player = playerOne;
-//     console.log('change places');
-//     var holder = player.auxweapon;
-//     player.auxweapon = player.weapon;
-//     player.weapon = holder;
-//   }
-//   if (whatPress === 'u') {
-//     console.log('change places');
-//     player = playerTwo;
-//     var holder = player.auxweapon;
-//     player.auxweapon = player.weapon;
-//     player.weapon = holder;
-//   }
-// }
+function grabBag () {
+  if (player === playerOne) {
+    altPlayer = playerTwo;
+  } if (player === playerTwo) {
+    altPlayer = playerOne;
+  }
+  //weapon switch
+  if (whatPress === 'e') {
+    player = playerOne;
+    console.log('change places');
+    var holder = player.auxweapon;
+    player.auxweapon = player.weapon;
+    player.weapon = holder;
+  }
+  if (whatPress === 'u') {
+    console.log('change places');
+    player = playerTwo;
+    var holder = player.auxweapon;
+    player.auxweapon = player.weapon;
+    player.weapon = holder;
+  }
+}
