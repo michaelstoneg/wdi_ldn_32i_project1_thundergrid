@@ -351,7 +351,7 @@ function treasureHunt() {
   if (gridSquares[player.position] === spearLocation) {
     player.auxweapon = player.weapon;
     player.weapon = 'spear';
-    player.bag.innerHTML += '<img src="images/spear.png">';
+    player.bag.innerHTML = '<img src="images/spear.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     spearLocation = undefined;
@@ -360,7 +360,7 @@ function treasureHunt() {
   if (gridSquares[player.position] === magicStaffLocation) {
     player.auxweapon = player.weapon;
     player.weapon = 'magicStaff';
-    player.bag.innerHTML += '<img src="images/magicStaff.png">';
+    player.bag.innerHTML = '<img src="images/magicStaff.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     magicStaffLocation = undefined;
@@ -369,32 +369,32 @@ function treasureHunt() {
   if (gridSquares[player.position] === bowLocation) {
     player.auxweapon = player.weapon;
     player.weapon = 'bow';
-    player.bag.innerHTML += '<img src="images/bow.png">';
+    player.bag.innerHTML = '<img src="images/bow.png">';
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     bowLocation = undefined;
   }
 }
 
-function grabBag () {
-  if (player === playerOne) {
-    altPlayer = playerTwo;
-  } if (player === playerTwo) {
-    altPlayer = playerOne;
-  }
-  //weapon switch
-  if (whatPress === 'e') {
-    player = playerOne;
-    console.log('change places');
-    var holder = player.auxweapon;
-    player.auxweapon = player.weapon;
-    player.weapon = holder;
-  }
-  if (whatPress === 'u') {
-    console.log('change places');
-    player = playerTwo;
-    var holder = player.auxweapon;
-    player.auxweapon = player.weapon;
-    player.weapon = holder;
-  }
-}
+// function grabBag () {
+//   if (player === playerOne) {
+//     altPlayer = playerTwo;
+//   } if (player === playerTwo) {
+//     altPlayer = playerOne;
+//   }
+//   //weapon switch
+//   if (whatPress === 'e') {
+//     player = playerOne;
+//     console.log('change places');
+//     var holder = player.auxweapon;
+//     player.auxweapon = player.weapon;
+//     player.weapon = holder;
+//   }
+//   if (whatPress === 'u') {
+//     console.log('change places');
+//     player = playerTwo;
+//     var holder = player.auxweapon;
+//     player.auxweapon = player.weapon;
+//     player.weapon = holder;
+//   }
+// }
