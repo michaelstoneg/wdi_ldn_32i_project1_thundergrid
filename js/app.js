@@ -319,7 +319,7 @@ function fightClub () {
 
 function supplyDrop(ps) {
 
-  if (ps % 5 === 0) {
+  if (ps=== 5) {
     spearLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (spearLocation.innerHTML === '') {
       spearLocation.innerHTML = '<img src="images/spear.png">';
