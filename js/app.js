@@ -319,7 +319,7 @@ function fightClub () {
 
 function supplyDrop(ps) {
 
-  if (ps === 1) {
+  if (ps % 5 === 0) {
     spearLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (spearLocation.innerHTML === '') {
       spearLocation.innerHTML = '<img src="images/spear.png">';
@@ -327,7 +327,7 @@ function supplyDrop(ps) {
       supplyDropSound.play();
     }
   }
-  else if (boardSize === 36 && ps === 2) {
+  else if (boardSize === 36 && ps === 10) {
     bowLocation = gridSquares[Math.floor(Math.random() * boardSize)];
       if (bowLocation.innerHTML === '') {
         bowLocation.innerHTML = '<img src="images/bow.png">';
@@ -335,7 +335,7 @@ function supplyDrop(ps) {
         supplyDropSound.play();
       }
     }
-  else if (boardSize === 36 && ps === 3) {
+  else if (boardSize === 36 && ps === 20) {
     magicStaffLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (magicStaffLocation.innerHTML === '') {
       magicStaffLocation.innerHTML = '<img src="images/magicStaff.png">';
@@ -396,18 +396,5 @@ function grabBag () {
     var holder = player.auxweapon;
     player.auxweapon = player.weapon;
     player.weapon = holder;
-  }
-  //empty bag
-  if (whatPress === 'o') {
-    player = playerTwo;
-    player.auxweapon = '';
-    player.auxweapon = player.weapon;
-    player.weapon = '';
-  }
-  if (whatPress === 'q') {
-    player = playerOne;
-    player.auxweapon = '';
-    player.auxweapon = player.weapon;
-    player.weapon = '';
   }
 }
