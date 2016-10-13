@@ -1,7 +1,4 @@
 
-// Add weapon switching (add aux weapon)
-
-
 console.log("It's Aliiive!!!!");
 
 var smallGrid = document.getElementById('size9');
@@ -20,6 +17,7 @@ var spearLocation = undefined;
 var bowLocation = undefined;
 var magicStaffLocation = undefined;
 var spearImage = document.getElementById('spearImage');
+var holder = '';
 
 // targetingAdjust = {
 //
@@ -35,7 +33,7 @@ playerOne = {
   position: undefined,
   action: '',
   weapon: 'sword',
-  auxweapon: '',
+  auxweapon: [],
   health: '',
   direction: 'd',
   score: 0,
@@ -52,7 +50,7 @@ playerTwo = {
   position: undefined,
   action: '',
   weapon: 'sword',
-  auxweapon: '',
+  auxweapon: [],
   health: '',
   direction: 'i',
   score: 0,
@@ -135,6 +133,7 @@ function  spawnPlayer() {
     player.health = 'alive';
     player.action = 'move';
     player.bag.innerHTML = '<img src="images/sword.png">';
+    player.infoBox.innerHTML = player.name + "'s score is   " + player.score;
   }
 }
 
@@ -189,6 +188,7 @@ function hotStepper () {
     player.position = undefined;
     player.weapon = '';
     player.action = '';
+    player.auxweapon = [];
   }
   if (target !== playerOne.position && target !== playerTwo.position) {
     player.action = 'move';
@@ -291,15 +291,34 @@ function fightClub () {
           deathSound.playbackRate = 1.5;
           deathSound.play();
           altPlayer.health = 'dead';
+          altPlayer.score = altPlayer.score - 1;
           player.action = '';
+          altPlayer.auxweapon = [];
           altPlayer.bag.innerHTML = '';
           gridSquares[altPlayer.position].innerHTML = '<img src="images/blood.png">';
           gridSquares[altPlayer.position].style.background = '';
           altPlayer.position = undefined;
-          player.score = player.score + 1;
-          player.infoBox.innerHTML = player.name + "'s score is   " + player.score + '<br>';
+          player.score += 1;
+          player.infoBox.innerHTML = player.name + "'s score is   " + player.score;
+          altPlayer.infoBox.innerHTML = altPlayer.name + "'s score is   " + altPlayer.score;
           supplyDrop(player.score);
+          if (player.score === 20 ) {
+          console.log(player.name, '   wins!');
+          altPlayer.infoBox.innerHTML = altPlayer.name + '   wins!';
+          player.infoBox.innerHTML = 'You win!';
+          setTimeout(function() {
+            window.location.reload();
+          }, 3000);
         }
+          if (altPlayer.score === 20 ) {
+          console.log(altPlayer.name, '   wins!');
+          player.infoBox.innerHTML = altPlayer.name + '   wins!';
+          altPlayer.infoBox.innerHTML = 'You win!';
+          setTimeout(function() {
+            window.location.reload();
+          }, 3000);
+        }
+      }
         else {
           defendedSound.playbackRate = 1;
           defendedSound.play();
@@ -319,7 +338,7 @@ function fightClub () {
 
 function supplyDrop(ps) {
 
-  if (ps=== 5) {
+  if (ps % 5 === 0) {
     spearLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (spearLocation.innerHTML === '') {
       spearLocation.innerHTML = '<img src="images/spear.png">';
@@ -327,7 +346,7 @@ function supplyDrop(ps) {
       supplyDropSound.play();
     }
   }
-  else if (boardSize === 36 && ps === 10) {
+  else if (boardSize === 36 && ps === 9) {
     bowLocation = gridSquares[Math.floor(Math.random() * boardSize)];
       if (bowLocation.innerHTML === '') {
         bowLocation.innerHTML = '<img src="images/bow.png">';
@@ -335,7 +354,7 @@ function supplyDrop(ps) {
         supplyDropSound.play();
       }
     }
-  else if (boardSize === 36 && ps === 20) {
+  else if (boardSize === 36 && ps === 14 ) {
     magicStaffLocation = gridSquares[Math.floor(Math.random() * boardSize)];
     if (magicStaffLocation.innerHTML === '') {
       magicStaffLocation.innerHTML = '<img src="images/magicStaff.png">';
@@ -349,27 +368,30 @@ function supplyDrop(ps) {
 
 function treasureHunt() {
   if (gridSquares[player.position] === spearLocation) {
-    player.auxweapon = player.weapon;
+    player.auxweapon.push(player.weapon);
     player.weapon = 'spear';
     player.bag.innerHTML = '<img src="images/spear.png">';
+    console.log(player.auxweapon);
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     spearLocation = undefined;
   }
 
   if (gridSquares[player.position] === magicStaffLocation) {
-    player.auxweapon = player.weapon;
+    player.auxweapon.push(player.weapon);
     player.weapon = 'magicStaff';
     player.bag.innerHTML = '<img src="images/magicStaff.png">';
+    console.log(player.auxweapon);
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     magicStaffLocation = undefined;
   }
 
   if (gridSquares[player.position] === bowLocation) {
-    player.auxweapon = player.weapon;
+    player.auxweapon.push(player.weapon);
     player.weapon = 'bow';
     player.bag.innerHTML = '<img src="images/bow.png">';
+    console.log(player.auxweapon);
     powerUpSound.playbackRate = 1.5;
     powerUpSound.play();
     bowLocation = undefined;
@@ -386,15 +408,45 @@ function grabBag () {
   if (whatPress === 'e') {
     player = playerOne;
     console.log('change places');
-    var holder = player.auxweapon;
-    player.auxweapon = player.weapon;
-    player.weapon = holder;
-  }
+    player.auxweapon.push(player.weapon);
+    console.log('new weapon set', player.auxweapon);
+    player.weapon = player.auxweapon[0];
+    console.log('new main weapon', player.weapon);
+    if (player.weapon === 'sword') {
+      player.bag.innerHTML = '<img src="images/sword.png">';
+    }
+    if (player.weapon === 'spear') {
+      player.bag.innerHTML = '<img src="images/spear.png">';
+    }
+    if (player.weapon === 'bow') {
+      player.bag.innerHTML = '<img src="images/bow.png">';
+    }
+    if (player.weapon === 'magicStaff') {
+      player.bag.innerHTML = '<img src="images/magicStaff.png">';
+    }
+    player.auxweapon.splice(0, 1);
+    console.log('new weapon set', player.auxweapon);
+    }
   if (whatPress === 'u') {
-    console.log('change places');
     player = playerTwo;
-    var holder = player.auxweapon;
-    player.auxweapon = player.weapon;
-    player.weapon = holder;
-  }
+    console.log('change places');
+    player.auxweapon.push(player.weapon);
+    console.log('new weapon set', player.auxweapon);
+    player.weapon = player.auxweapon[0];
+    console.log('new main weapon', player.weapon);
+    if (player.weapon === 'sword') {
+      player.bag.innerHTML = '<img src="images/sword.png">';
+    }
+    if (player.weapon === 'spear') {
+      player.bag.innerHTML = '<img src="images/spear.png">';
+    }
+    if (player.weapon === 'bow') {
+      player.bag.innerHTML = '<img src="images/bow.png">';
+    }
+    if (player.weapon === 'magicStaff') {
+      player.bag.innerHTML = '<img src="images/magicStaff.png">';
+    }
+    player.auxweapon.splice(0, 1);
+    console.log('new weapon set', player.auxweapon);
+    }
 }
