@@ -44,6 +44,7 @@ playerTwo = {
   name: 'p2',
   avatar: '<img src="images/paladinleftattack3.png">',
   up: '<img src="images/paladinupattack3.png">',
+
   down: '<img src="images/paladindownattack2.png">',
   left: '<img src="images/paladinleftattack3.png">',
   right: '<img src="images/paladinrightattack2.png">',
@@ -285,6 +286,7 @@ function fightClub () {
     attackSound.playbackRate = 2.5;
     attackSound.play();
     gridSquares[player.position].style.background = '#ff5050';
+
     targeting();
       if (target === altPlayer.position) {
         if (altPlayer.action !== 'defend' && altPlayer.health !== 'dead' ) {
