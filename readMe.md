@@ -5,7 +5,7 @@ Welcome to
 by: Michael Grandison
 
 #Play it Nowwww!!!!!
-<a href="https://thun-der-grid.herokuapp.com/" target="_blank">On Heroku</a>
+<a href="https://thun-der-grid.herokuapp.com/">On Heroku</a>
 
 
 
@@ -65,11 +65,7 @@ P2: respawn = 0, attack = n, defend = h, item switch = u
 
 ##### Made with:
 
--Javascript (vanilla)
-
--CSS3
-
--HTML5
+-Javascript (vanilla), CSS3, HTML5
 
 
 
