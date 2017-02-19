@@ -4,6 +4,10 @@ Welcome to
 <br>
 by: Michael Grandison
 
+#Play it Nowwww!!!!!
+<a href="https://thun-der-grid.herokuapp.com/">On Heroku</a>
+
+
 
 ##What is it?
 Grid of fire is a grid based fighting game with simple combat mechanics that emphasizes timing and persistence.
@@ -59,7 +63,7 @@ P2: respawn = 0, attack = n, defend = h, item switch = u
 
 - Of course there were challenges. First of which was having two of each piece of code. One for each player. I solved this issue by creating player objects and variables for current and alternate players.
 
-##### Technologies used:
+##### Made with:
 
 -Javascript (vanilla)
 
@@ -67,6 +71,6 @@ P2: respawn = 0, attack = n, defend = h, item switch = u
 
 -HTML5
 
--
+
 
 
