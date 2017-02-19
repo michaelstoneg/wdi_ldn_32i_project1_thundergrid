@@ -5,7 +5,7 @@ Welcome to
 by: Michael Grandison
 
 #Play it Nowwww!!!!!
-<a href="https://thun-der-grid.herokuapp.com/">On Heroku</a>
+<a href="https://thun-der-grid.herokuapp.com/" target="_blank">On Heroku</a>
 
 
 
