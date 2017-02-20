@@ -4,6 +4,10 @@ Welcome to
 <br>
 by: Michael Grandison
 
+<img src="http://i.imgur.com/ZNrrANr.png">
+<br>
+<img src="http://i.imgur.com/tX4sNDz.png">
+
 #Play it Nowwww!!!!!
 <a href="https://thun-der-grid.herokuapp.com/">On Heroku</a>
 
